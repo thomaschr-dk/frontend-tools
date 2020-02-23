@@ -1,33 +1,33 @@
-import nodeSass from 'node-sass';
+import sass from 'node-sass';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 
-const sass = input => {
+const sassTask = input => {
   const inputFile = fs.realpathSync(input);
   if (inputFile.match('(\\w+?)*\\/(?!_)(\\w+?)\\.scss$')) {
     const output = inputFile.replace('.scss', '.css');
-    let nodeSassOptions = {
+    let sassOptions = {
       file: inputFile,
       outFile: output
     };
     switch (process.env.NODE_ENV) {
       case 'development':
-        nodeSassOptions = {
-          ...nodeSassOptions,
+        sassOptions = {
+          ...sassOptions,
           sourceMap: true,
           sourceMapEmbed: true
         };
         break;
       case 'production':
-        nodeSassOptions = {
-          ...nodeSassOptions,
+        sassOptions = {
+          ...sassOptions,
           outputStyle: 'compressed'
         };
         break;
       default:
     }
-    nodeSass.render(nodeSassOptions, (sassError, result) => {
+    sass.render(sassOptions, (sassError, result) => {
       if (!sassError) {
         fs.writeFile(output, result.css, writeError => {
           if (!writeError) {
@@ -45,4 +45,4 @@ const sass = input => {
   }
 };
 
-export default sass;
+export default sassTask;

@@ -2,10 +2,10 @@ import chokidar from 'chokidar';
 import path from 'path';
 import * as sassExtract from 'sass-extract';
 import chalk from 'chalk';
-import sass from './sass';
-import babel from './babel';
+import sassTask from './sass';
+import babelTask from './babel';
 
-const watch = files => {
+const watchTask = files => {
   const sassDependencies = {};
   files.forEach(file => {
     if (path.extname(file) === '.scss') {
@@ -21,15 +21,15 @@ const watch = files => {
     if (path.extname(filePath) === '.scss') {
       Object.keys(sassDependencies).forEach(file => {
         if (sassDependencies[file].includes(path.resolve(filePath))) {
-          sass(file);
+          sassTask(file);
         }
       });
     }
 
     if (path.extname(filePath) === '.js') {
-      babel(filePath);
+      babelTask(filePath);
     }
   });
 };
 
-export default watch;
+export default watchTask;
