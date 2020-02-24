@@ -2,12 +2,13 @@
 import meow from 'meow';
 import glob from 'glob';
 import chalk from 'chalk';
+import path from 'path';
 import sassTask from './tasks/sass';
 import babelTask from './tasks/babel';
 import watch from './tasks/watch';
 
 const cli = meow(
-  `${chalk.bgHex('#c80046').bold('FrontendTools')}
+  `${chalk.bgHex('#c80046').bold('fronter')}
 
   ${chalk.bold('Usage')}
     $ ${chalk.bold('front-styles prod')}
@@ -27,24 +28,25 @@ const cli = meow(
 );
 
 const globOptions = {
-  ignore: ['requirejs-config.js', 'node_modules']
+  ignore: ['requirejs-config.js', 'node_modules'],
+  realpath: true
 };
 const cssFiles = glob.sync('**/*.scss', globOptions);
 const jsFiles = glob.sync('**/*.babel.js', globOptions);
-
+process.chdir(path.dirname(__dirname));
 process.env.NODE_ENV = 'development';
 switch (cli.input[0]) {
   case 'prod':
     process.env.NODE_ENV = 'production';
-    cssFiles.map(cssFile => sassTask(cssFile));
-    jsFiles.map(jsFile => babelTask(jsFile));
+    cssFiles.forEach(cssFile => sassTask(cssFile, cli.flags.lint));
+    jsFiles.forEach(jsFile => babelTask(jsFile, cli.flags.lint));
     break;
   case 'dev':
-    cssFiles.map(cssFile => sassTask(cssFile));
-    jsFiles.map(jsFile => babelTask(jsFile));
+    cssFiles.forEach(cssFile => sassTask(cssFile, cli.flags.lint));
+    jsFiles.forEach(jsFile => babelTask(jsFile, cli.flags.lint));
     break;
   case 'watch':
-    watch([...cssFiles, ...jsFiles]);
+    watch([...cssFiles, ...jsFiles], cli.flags.lint);
     break;
   default:
     console.log(

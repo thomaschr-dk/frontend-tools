@@ -3,7 +3,9 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "no-console": "off"
+    "no-console": "off",
+    "import/no-amd": "off",
+    "no-undef": "off"
   },
   "parser": "babel-eslint"
 }

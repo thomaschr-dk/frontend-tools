@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import sassTask from './sass';
 import babelTask from './babel';
 
-const watchTask = files => {
+const watchTask = (files, lint = false) => {
   const sassDependencies = {};
   files.forEach(file => {
     if (path.extname(file) === '.scss') {
@@ -16,18 +16,27 @@ const watchTask = files => {
     }
   });
   const watcher = chokidar.watch(files);
-  console.log(chalk.bold(`👀 Watching for changes to .scss and .babel.js files`));
+  const chalkColors = {
+    '.scss': 'red',
+    '.js': 'yellow'
+  };
+  console.log(
+    chalk`{bold [👀]} Watching for changes to {red .scss} and {yellow .babel.js} files...`
+  );
   watcher.on('change', filePath => {
-    if (path.extname(filePath) === '.scss') {
+    const ext = path.extname(filePath);
+    console.log(
+      chalk`{bold [👀]} Change detected: {${chalkColors[ext]} ${path.basename(filePath)}}`
+    );
+    if (ext === '.scss') {
       Object.keys(sassDependencies).forEach(file => {
-        if (sassDependencies[file].includes(path.resolve(filePath))) {
-          sassTask(file);
+        if (sassDependencies[file].includes(filePath)) {
+          sassTask(file, lint);
         }
       });
     }
-
-    if (path.extname(filePath) === '.js') {
-      babelTask(filePath);
+    if (ext === '.js') {
+      babelTask(filePath, lint);
     }
   });
 };

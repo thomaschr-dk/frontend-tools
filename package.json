@@ -5,32 +5,43 @@
   "author": "Thomas Christiansen",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.8.4",
     "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "autoprefixer": "^9.7.4",
     "chalk": "^3.0.0",
     "chokidar": "^3.3.1",
     "core-js": "^3.6.4",
+    "cssnano": "^4.1.10",
     "glob": "^7.1.6",
     "meow": "^6.0.1",
     "node-sass": "^4.13.1",
-    "sass-extract": "^2.1.0"
+    "postcss": "^7.0.27",
+    "postcss-easy-import": "^3.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-reporter": "^6.0.1",
+    "postcss-scss": "^2.0.0",
+    "precss": "^4.0.0",
+    "sass-extract": "^2.1.0",
+    "stylelint": "^13.2.0",
+    "stylelint-scss": "^3.14.2",
+    "eslint": "^6.8.0"
   },
   "scripts": {
     "compile": "eslint src && babel src --out-dir dist"
   },
   "bin": {
-    "front-styles": "./dist/cli.js"
+    "fronter": "dist/cli.js"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.8.4",
     "babel-eslint": "^10.0.3",
     "babel-preset-minify": "^0.5.1",
-    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "^1.19.1",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "stylelint-config-standard": "^20.0.0"
   }
 }
