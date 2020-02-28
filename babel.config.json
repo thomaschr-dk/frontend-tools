@@ -9,5 +9,6 @@
       }
     ]
   ],
+  "plugins": ["inline-json-import"],
   "comments": false
 }

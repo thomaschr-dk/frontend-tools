@@ -2,33 +2,28 @@ import { transform } from '@babel/core';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import { CLIEngine } from 'eslint';
-import babelPresets from '../../config/babel.presets.json';
+import { babelLint } from '../lint/babel';
+import babelPresets from '../config/babel.presets.json';
 
 const babelTask = (file, lint = false) => {
   const output = file.replace('.babel', '');
   const fileContent = fs.readFileSync(file, 'utf-8');
-  let babelOptions = {
+  const babelOptions = {
     presets: babelPresets
   };
 
   if (lint) {
-    const cli = new CLIEngine();
-    const report = cli.executeOnText(fileContent, path.basename(file));
-    const formatter = cli.getFormatter();
-    report.results[0].filePath = file;
-    const results = formatter(report.results);
-    if (results) {
-      console.log(results);
+    const lintErrors = babelLint(fileContent, file);
+    if (lintErrors) {
+      console.log(lintErrors);
+      return;
     }
   }
+
   switch (process.env.NODE_ENV) {
     case 'development':
-      babelOptions = {
-        ...babelOptions,
-        sourceMaps: 'inline',
-        sourceFileName: path.basename(file)
-      };
+      babelOptions.sourceMaps = 'inline';
+      babelOptions.sourceFileName = path.basename(file);
       break;
     case 'production':
       babelOptions.presets.push('minify');
@@ -54,4 +49,4 @@ const babelTask = (file, lint = false) => {
   });
 };
 
-export default babelTask;
+export { babelTask };

@@ -33,14 +33,13 @@ const sassTask = (input, lint = false) => {
         postcssOptions.map = true;
         break;
       case 'production':
-        postcssPlugins.push(cssnano);
+        postcssPlugins.push(cssnano({ autoprefixer: false }));
         break;
       default:
     }
 
     const css = fs.readFileSync(input, 'utf-8');
-    const processor = postcss(postcssPlugins);
-    processor
+    postcss(postcssPlugins)
       .process(css, postcssOptions)
       .then(result => {
         fs.writeFile(output, result.css, writeError => {
@@ -59,4 +58,4 @@ const sassTask = (input, lint = false) => {
   }
 };
 
-export default sassTask;
+export { sassTask };
