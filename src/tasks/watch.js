@@ -13,13 +13,17 @@ const watchTask = (lint = false) => {
 
   process.chdir(__dirname);
   const sassDependencies = buildSassDependencies(files);
-  const watcher = chokidar.watch(files);
+  const watcher = chokidar.watch(files, {
+    awaitWriteFinish: {
+      stabilityThreshold: 250
+    }
+  });
   console.log(
     chalk`{bold [👀]} Watching for changes to {${chalkColors['.scss']} .scss} and {${chalkColors['.js']} .babel.js} files...`
   );
 
   watcher.on('change', filePath => {
-    const extension = path.extensionname(filePath);
+    const extension = path.extname(filePath);
     console.log(
       chalk`{bold [👀]} Change detected: {${chalkColors[extension]} ${path.basename(filePath)}}`
     );

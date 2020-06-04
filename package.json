@@ -1,9 +1,12 @@
 {
-  "name": "frontendtools",
+  "name": "thomaschr-dk-fronter",
   "version": "1.0.0",
   "description": "",
   "author": "Thomas Christiansen",
   "license": "ISC",
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
@@ -28,28 +31,25 @@
     "stylelint": "^13.2.0",
     "stylelint-scss": "^3.14.2"
   },
-  "scripts": {
-    "compile": "babel src --out-dir dist",
-    "compile-lint": "eslint src && babel src --out-dir dist",
-    "test": "mocha --require @babel/register"
-  },
-  "bin": {
-    "fronter": "dist/cli.js"
-  },
   "devDependencies": {
     "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
     "babel-eslint": "^10.0.3",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-preset-minify": "^0.5.1",
-    "chai": "^4.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "mocha": "^7.0.1",
     "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3",
     "stylelint-config-standard": "^20.0.0"
+  },
+  "scripts": {
+    "compile": "babel src --out-dir dist",
+    "compile-lint": "eslint src && babel src --out-dir dist"
+  },
+  "bin": {
+    "fronter": "dist/cli.js"
   }
 }

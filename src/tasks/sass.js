@@ -23,11 +23,12 @@ const sassTask = (input, lint = false) => {
       extensions: ['.css', '.scss'],
       plugins: []
     };
-
+    const postcssPlugins = [easyImport(easyImportOptions)];
     if (lint) {
       easyImportOptions.plugins.push(stylelint);
+      postcssPlugins.push(stylelint);
     }
-    const postcssPlugins = [easyImport(easyImportOptions), postcssReporter, precss, autoprefixer];
+    postcssPlugins.push(postcssReporter({ throwError: true }), precss, autoprefixer);
     switch (process.env.NODE_ENV) {
       case 'development':
         postcssOptions.map = true;
@@ -53,7 +54,7 @@ const sassTask = (input, lint = false) => {
         });
       })
       .catch(postcssError => {
-        console.log(postcssError);
+        console.log(postcssError.message);
       });
   }
 };

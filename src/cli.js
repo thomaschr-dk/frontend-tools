@@ -9,25 +9,17 @@ const cli = meow(
   `${chalk.bgHex('#c80046').bold('fronter')}
 
   ${chalk.bold('Usage')}
-    $ ${chalk.bold('front-styles prod')}
+    $ ${chalk.bold('fronter prod')}
       Compiles and minifies your .scss and .babel.js files
-    $ ${chalk.bold('front-styles dev')}
+    $ ${chalk.bold('fronter dev')}
       Compiles your .scss and .babel.js files with source maps
-    $ ${chalk.bold('front-styles watch')}
+    $ ${chalk.bold('fronter watch')}
       Watches and compiles your .scss and .babel.js files on change with source maps`,
   {
     flags: {
       lint: {
         type: 'boolean',
         alias: 'l'
-      },
-      style: {
-        type: 'boolean',
-        alias: 'scss'
-      },
-      script: {
-        type: 'boolean',
-        alias: 'js'
       }
     }
   }
