@@ -9,7 +9,8 @@ const babelTask = (file, lint = false) => {
   const output = file.replace('.babel', '');
   const fileContent = fs.readFileSync(file, 'utf-8');
   const babelOptions = {
-    presets: babelPresets
+    presets: babelPresets,
+    cwd: __dirname
   };
 
   if (lint) {
